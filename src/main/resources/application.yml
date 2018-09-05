@@ -1,0 +1,8 @@
+spring:
+  thymeleaf:
+    cache: false # Whether to enable template caching.
+    enabled: true # Whether to enable Thymeleaf view resolution for Web frameworks.
+    encoding: UTF-8 # Template files encoding.
+    mode: HTML5 # Template mode to be applied to templates. See also Thymeleaf's TemplateMode enum.
+    prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
+    suffix: .html # Suffix that gets appended to view names when building a URL.
