@@ -32,3 +32,12 @@ mybatis:
     default-fetch-size: 100
     default-statement-timeout: 3000
   mapper-locations: classpath:com/tilkai/highconcurrency/dao/*.xml
+# Custom redis config.
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: 123456
+  timeout: 3
+  poolMaxTotal: 10
+  poolMaxIdle: 10
+  poolMaxWait: 3
