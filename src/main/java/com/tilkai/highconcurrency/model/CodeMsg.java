@@ -3,7 +3,7 @@ package com.tilkai.highconcurrency.model;
 import lombok.Getter;
 
 /**
- * Note:
+ * Note: 状态码和消息内容的封装类
  * <p>为了限制封装, 私有化构造方法, 只保留get方法</p>
  *
  * @author tilkai

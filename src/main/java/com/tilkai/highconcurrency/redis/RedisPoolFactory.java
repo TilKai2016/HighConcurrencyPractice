@@ -7,7 +7,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Note:
+ * Note: Jedis连接池工厂方法, 用于创建一个可被注入的Jedis连接池
  *
  * @author tilkai
  * @date 2018-09-06 下午10:20
