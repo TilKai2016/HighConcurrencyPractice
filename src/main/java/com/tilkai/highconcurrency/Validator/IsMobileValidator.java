@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Note: 实现ConstraintValidator<?, ?>, <p>ConstraintValidator的两个参数分别为注解, 以及注解类型.</p>
+ * Note: 实现ConstraintValidator<?, ?>, <p>ConstraintValidator的两个参数分别为注解, 以及注解标注的字段类型.</p>
  *
  * @author tilkai
  * @date 2018-09-07 下午5:23

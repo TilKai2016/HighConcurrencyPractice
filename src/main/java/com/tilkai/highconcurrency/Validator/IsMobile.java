@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface IsMobile {
 
     /**
-     * true 参数默认得有
+     * true 参数默认为必须有
      * @return
      */
     boolean required() default true;
