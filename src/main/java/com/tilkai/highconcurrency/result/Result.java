@@ -1,4 +1,4 @@
-package com.tilkai.highconcurrency.model;
+package com.tilkai.highconcurrency.result;
 
 import lombok.Getter;
 

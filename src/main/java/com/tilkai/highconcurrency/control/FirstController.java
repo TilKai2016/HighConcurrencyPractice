@@ -1,6 +1,6 @@
 package com.tilkai.highconcurrency.control;
 
-import com.tilkai.highconcurrency.model.Result;
+import com.tilkai.highconcurrency.result.Result;
 import com.tilkai.highconcurrency.redis.UserKey;
 import com.tilkai.highconcurrency.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
