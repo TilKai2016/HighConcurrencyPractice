@@ -1,6 +1,10 @@
 package com.tilkai.highconcurrency.vo;
 
+import com.tilkai.highconcurrency.Validator.IsMobile;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Note: 接收登录请求参数
@@ -11,6 +15,10 @@ import lombok.Data;
 @Data
 public class LoginVo {
 
+    @NotNull
+    @IsMobile
     private String  mobile;
+    @NotNull
+    @Length(min = 6, max = 22)
     private String password;
 }
