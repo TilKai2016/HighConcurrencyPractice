@@ -2,6 +2,7 @@ package com.tilkai.highconcurrency.service;
 
 import com.tilkai.highconcurrency.dao.MiaoshaUserDao;
 import com.tilkai.highconcurrency.domain.MiaoshaUser;
+import com.tilkai.highconcurrency.exception.GlobalException;
 import com.tilkai.highconcurrency.result.CodeMsg;
 import com.tilkai.highconcurrency.util.MD5Utils;
 import com.tilkai.highconcurrency.vo.LoginVo;
@@ -20,24 +21,23 @@ public class MiaoshaUserService {
     @Autowired
     private MiaoshaUserDao miaoshaUserDao;
 
-    public CodeMsg login(LoginVo loginVo) {
+    public boolean login(LoginVo loginVo) {
         if (loginVo == null) {
-            return CodeMsg.SERVER_ERROR;
+            throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
         MiaoshaUser user = getUserById(loginVo.getMobile());
         if (user == null) {
-            return CodeMsg.MOBILE_NOT_EXIST;
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }
         String dbPassword = user.getPassword();
         String dbSalt = user.getSalt();
         String formPassword = MD5Utils.formPassToDbPass(loginVo.getPassword(), dbSalt);
 
         if (!formPassword.equals(dbPassword)) {
-
-            return CodeMsg.PASSWORD_ERROR;
+            throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
 
-        return CodeMsg.SUCCESS;
+        return true;
 
     }
     public MiaoshaUser getUserById(String mobile) {

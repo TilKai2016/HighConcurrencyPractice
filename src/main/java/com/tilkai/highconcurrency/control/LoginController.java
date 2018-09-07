@@ -24,8 +24,6 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    Logger logger = LoggerFactory.getLogger(LoginController.class);
-
     @Autowired
     private MiaoshaUserService miaoshaUserService;
 
@@ -37,27 +35,7 @@ public class LoginController {
     @RequestMapping(value = "/do_login", method = RequestMethod.POST)
     @ResponseBody
     public Result doLogin(@Valid LoginVo loginVo) {
-
-
-//        String mobile = loginVo.getMobile();
-//        String password = loginVo.getPassword();
-//
-//        if (StringUtils.isEmpty(password)) {
-//            return Result.error(CodeMsg.PASSWORD_EMPTY);
-//        }
-//        if (StringUtils.isEmpty(mobile)) {
-//            return Result.error(CodeMsg.MOBILE_EMPTY);
-//        }
-//        if (!ValidatorUtils.isMobile(mobile)) {
-//            return Result.error(CodeMsg.MOBILE_ERROR);
-//        }
-
-        CodeMsg codeMsg = miaoshaUserService.login(loginVo);
-
-        if (codeMsg.getCode() == 0) {
-            return Result.success(true);
-        } else {
-            return Result.error(codeMsg);
-        }
+        miaoshaUserService.login(loginVo);
+        return Result.success(true);
     }
 }
