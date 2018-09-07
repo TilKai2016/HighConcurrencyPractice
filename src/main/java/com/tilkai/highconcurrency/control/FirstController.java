@@ -1,7 +1,8 @@
 package com.tilkai.highconcurrency.control;
 
 import com.tilkai.highconcurrency.model.Result;
-import com.tilkai.highconcurrency.service.RedisService;
+import com.tilkai.highconcurrency.redis.UserKey;
+import com.tilkai.highconcurrency.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +24,14 @@ public class FirstController {
     @ResponseBody
     @RequestMapping("redis/get")
     Result redisGet() {
-        Long a = redisService.get("key2", Long.class);
+        Long a = redisService.get(UserKey.getById, "1", Long.class);
         return Result.success(a);
     }
 
     @ResponseBody
     @RequestMapping("redis/set")
     Result redisSet() {
-        boolean a = redisService.set("key2", 1L);
+        boolean a = redisService.set(UserKey.getById, "1", 1L);
         return Result.success(a);
     }
 }

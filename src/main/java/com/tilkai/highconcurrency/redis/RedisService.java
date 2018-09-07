@@ -1,6 +1,7 @@
-package com.tilkai.highconcurrency.service;
+package com.tilkai.highconcurrency.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.tilkai.highconcurrency.redis.KeyPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -19,45 +20,111 @@ public class RedisService {
     private JedisPool jedisPool;
 
     /**
-     * note 获取主键对应的clazz.class类型的value
-     * @param key
-     * @param clazz
+     * note 获取单个缓存对象
+     * @param prefix key前缀
+     * @param key key后缀
+     * @param clazz 缓存数据类型
      * @return
      * @author tilkai
      * @date 2018/9/6
      */
-    public <T> T get(String key, Class<T> clazz) {
+    public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            String beanStr = jedis.get(key);
-            T t = stringToBean(beanStr, clazz);
-            return t;
+            String realKey = prefix.getPrefix() + key;
+            String beanStr = jedis.get(realKey);
+            return stringToBean(beanStr, clazz);
         } finally {
             returnToPool(jedis);
         }
     }
 
     /**
-     * note 向Redis缓存中添加数据
+     * note 设置对象
+     * @param prefix
      * @param key
      * @param value
      * @return
      * @author tilkai
      * @date 2018/9/6
      */
-    public <T> boolean set(String key, T value) {
+    public <T> boolean set(KeyPrefix prefix, String key, T value) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             String beanStr = beanToString(value);
             if (beanStr == null || beanStr.length() <= 0) {
                 return false;
-            } else {
-                jedis.set(key, beanStr);
-                return true;
             }
+            String realKey = prefix.getPrefix() + key;
+            if (prefix.expireSeconds() <= 0) {
+                jedis.set(realKey, beanStr);
+            } else {
+                // 设置带有效期的缓存.
+                jedis.setex(realKey, prefix.expireSeconds(), beanStr);
+            }
+            return true;
         } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * note 判断realKey是否存在
+     * @param prefix
+     * @param key
+     * @return
+     * @author tilkai
+     * @date 2018/9/7
+     */
+    public <T> boolean isExists(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = prefix.getPrefix() + key;
+            return jedis.exists(realKey);
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * note 增加值
+     * @param prefix
+     * @param key
+     * @return
+     * @author tilkai
+     * @date 2018/9/7
+     */
+    public <T> Long incr(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis =  jedisPool.getResource();
+            //生成真正的key
+            String realKey  = prefix.getPrefix() + key;
+            return  jedis.incr(realKey);
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * note 减少值
+     * @param prefix
+     * @param key
+     * @return
+     * @author tilkai
+     * @date 2018/9/7
+     */
+    public <T> Long decr(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis =  jedisPool.getResource();
+            //生成真正的key
+            String realKey  = prefix.getPrefix() + key;
+            return  jedis.decr(realKey);
+        }finally {
             returnToPool(jedis);
         }
     }
