@@ -40,4 +40,8 @@ dependencies {
     compile('redis.clients:jedis')
 
     compile('com.alibaba:fastjson:1.2.47')
+
+    // md5工具依赖
+    compile('commons-codec:commons-codec')
+    compile('org.apache.commons:commons-lang3:3.6')
 }
