@@ -2,6 +2,8 @@ package com.tilkai.highconcurrency.exception;
 
 import com.tilkai.highconcurrency.result.CodeMsg;
 import com.tilkai.highconcurrency.result.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,9 +23,12 @@ import java.util.List;
 @ResponseBody
 public class GlobalExceptionHandler {
 
+    Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(HttpServletRequest request, Exception e) {
 
+        e.printStackTrace();
         if (e instanceof GlobalException) {
             GlobalException globalException = (GlobalException) e;
             CodeMsg codeMsg = globalException.getCodeMsg();
