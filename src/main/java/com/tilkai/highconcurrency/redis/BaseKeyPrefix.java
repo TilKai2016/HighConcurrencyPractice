@@ -8,8 +8,14 @@ package com.tilkai.highconcurrency.redis;
  */
 public abstract class BaseKeyPrefix implements KeyPrefix {
 
+    /**
+     * redis到期时间
+     */
     private int expireSeconds;
 
+    /**
+     * redis-key前缀
+     */
     private String prefix;
 
     /**
@@ -20,8 +26,6 @@ public abstract class BaseKeyPrefix implements KeyPrefix {
      * @date 2018/9/7
      */
     public BaseKeyPrefix(String prefix) {
-//        this.expireSeconds = 0;
-//        this.prefix = prefix;
         this(0, prefix);
     }
 

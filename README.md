@@ -34,3 +34,5 @@ compile('org.springframework.boot:spring-boot-starter-validation')
 该方法或该方法所在的类使用`@ResponBody`进行标注, 向客户端返回友好的异常提示信息.
 
 你也可以通过自定义继承于RuntimeException的自定义异常来满足自己的业务需求.
+
+## 实现分布式SESSION

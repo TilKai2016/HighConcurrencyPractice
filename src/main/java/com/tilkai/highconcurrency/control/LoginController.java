@@ -1,17 +1,13 @@
 package com.tilkai.highconcurrency.control;
 
-import com.tilkai.highconcurrency.result.CodeMsg;
 import com.tilkai.highconcurrency.result.Result;
 import com.tilkai.highconcurrency.service.MiaoshaUserService;
-import com.tilkai.highconcurrency.util.ValidatorUtils;
 import com.tilkai.highconcurrency.vo.LoginVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -34,8 +30,8 @@ public class LoginController {
 
     @RequestMapping(value = "/do_login", method = RequestMethod.POST)
     @ResponseBody
-    public Result doLogin(@Valid LoginVo loginVo) {
-        miaoshaUserService.login(loginVo);
+    public Result doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
+        miaoshaUserService.login(response, loginVo);
         return Result.success(true);
     }
 }

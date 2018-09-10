@@ -6,9 +6,9 @@ package com.tilkai.highconcurrency.redis;
  * @author tilkai
  * @date 2018-09-07 上午9:37
  */
-public class Orderkey extends BaseKeyPrefix {
+public class OrderKey extends BaseKeyPrefix {
 
-    private Orderkey(int expireSeconds, String prefix) {
+    private OrderKey(int expireSeconds, String prefix) {
         super(expireSeconds, prefix);
     }
 
