@@ -41,6 +41,9 @@ public class CodeMsg {
 
     // 秒杀模块 5005XX
 
+    public static CodeMsg MIAOSHA_OVER = new CodeMsg(500500, "商品已经秒杀完了");
+    public static CodeMsg MIAOSHA_REPEATER_ERROR = new CodeMsg(500501, "不能重复秒杀");
+
     public CodeMsg fillArgs(Object... args) {
         int code = this.code;
         String msg = String.format(this.msg, args);
