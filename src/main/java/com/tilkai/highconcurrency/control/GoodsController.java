@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class GoodsController {
 
-    @ResponseBody
     @RequestMapping("to_list")
     String toGoodsList(Model model, MiaoshaUser miaoshaUser) {
-        model.addAttribute(miaoshaUser);
+        model.addAttribute("user", miaoshaUser);
         return "goods_list";
     }
 }

@@ -57,7 +57,9 @@ public class MiaoshaUserService {
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
 
-        addCookie(response, user);
+        // 生成cookie
+        String token = UUIDUtils.uuid();
+        addCookie(response, user, token);
         return true;
     }
     public MiaoshaUser getUserById(String mobile) {
@@ -72,7 +74,7 @@ public class MiaoshaUserService {
         }
         MiaoshaUser miaoshaUser = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
         if (miaoshaUser != null) {
-            addCookie(response, miaoshaUser);
+            addCookie(response, miaoshaUser, token);
         }
         return miaoshaUser;
     }
@@ -85,9 +87,7 @@ public class MiaoshaUserService {
      * @author tilkai
      * @date 2018/9/10
      */
-    private void addCookie(HttpServletResponse response, MiaoshaUser user) {
-        // 生成cookie
-        String token = UUIDUtils.uuid();
+    private void addCookie(HttpServletResponse response, MiaoshaUser user, String token) {
 
         // 将token写入到第三方缓存, 标识该token属于哪个用户, 之后可通过get方法获取token绑定的用户
         redisService.set(MiaoshaUserKey.token, token, user);
