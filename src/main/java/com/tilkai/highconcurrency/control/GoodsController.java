@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Note:
  *
@@ -26,7 +28,11 @@ public class GoodsController {
     @RequestMapping("/to_list")
     String toGoodsList(Model model, MiaoshaUser miaoshaUser) {
         model.addAttribute("user", miaoshaUser);
-        model.addAttribute("goodsList", goodsService.listGoodsVo());
+        List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
+        model.addAttribute("goodList", goodsVoList);
+
+
+//        model.addAttribute("goodsList", goodsService.listGoodsVo());
         return "goods_list";
     }
 

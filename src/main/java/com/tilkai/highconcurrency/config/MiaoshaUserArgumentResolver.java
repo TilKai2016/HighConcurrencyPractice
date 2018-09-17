@@ -51,11 +51,22 @@ public class MiaoshaUserArgumentResolver implements HandlerMethodArgumentResolve
 
     private String getCookieValue(HttpServletRequest request, String cookieName) {
 
+        String result = null;
         Cookie[] cookies = request.getCookies();
-        return Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(cookieName))
-                .map(cookie -> cookie.getValue())
-                .findFirst()
-                .orElse(null);
+        if (cookies == null) {
+            return null;
+        }
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(cookieName)) {
+                result = cookie.getValue();
+                break;
+            }
+        }
+        return result;
+//        return Arrays.stream(cookies)
+//                .filter(cookie -> cookie.getName().equals(cookieName))
+//                .map(cookie -> cookie.getValue())
+//                .findFirst()
+//                .orElse(null);
     }
 }
